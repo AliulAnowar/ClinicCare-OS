@@ -1,0 +1,71 @@
+/* Base Root Theme */
+.root {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-background-color: #f4f6f9;
+}
+
+/* TabPane Styling */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #e9ecef;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #dee2e6;
+    -fx-padding: 6 16 6 16;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* SplitPane Transparent Background */
+.split-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-padding: 0 2 0 2;
+}
+
+/* Form Container Card */
+.section-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+    -fx-border-color: #dcdfe6;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.section-header {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Button Styling */
+.btn-primary {
+    -fx-background-color: #0d6efd;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 6 16 6 16;
+    -fx-cursor: hand;
+    -fx-background-radius: 4px;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #0b5ed7;
+}
+
+.btn-secondary {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+    -fx-padding: 6 16 6 16;
+    -fx-cursor: hand;
+    -fx-background-radius: 4px;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #5c636a;
+}

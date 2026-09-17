@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane tabClosingPolicy="UNAVAILABLE" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinic.controller.AdminDashboardController">
+    <tabs>
+        <!-- TAB 1: EXECUTIVE ANALYTICS DASHBOARD -->
+    <!-- Inside Executive Analytics Tab -->
+		<Tab text="Executive Analytics">
+			<VBox spacing="15.0">
+				<padding>
+					<Insets top="15" right="15" bottom="15" left="15"/>
+				</padding>
+
+				<!-- Top KPI Bar -->
+				<HBox spacing="15.0">
+					<VBox styleClass="kpi-card">
+						<Label text="Today's Total Income" styleClass="kpi-title"/>
+						<Label fx:id="lblTodayIncome" text="৳ 0.00" styleClass="kpi-value"/>
+					</VBox>
+					<VBox styleClass="kpi-card">
+						<Label text="Monthly Total Income" styleClass="kpi-title"/>
+						<Label fx:id="lblMonthlyIncome" text="৳ 0.00" styleClass="kpi-value"/>
+					</VBox>
+					<VBox styleClass="kpi-card">
+						<Label text="Cabin Occupancy" styleClass="kpi-title"/>
+						<Label fx:id="lblCabinOccupancy" text="0 / 0" styleClass="kpi-value"/>
+					</VBox>
+				</HBox>
+
+				<!-- Nested View Selection -->
+				<TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+					
+					<!-- 1. DAILY VIEW -->
+					<Tab text="Daily Analytics">
+						<HBox spacing="15.0">
+							<PieChart fx:id="chartDailyOccupancy" title="Today's Occupancy Status" HBox.hgrow="ALWAYS"/>
+							<BarChart fx:id="chartDailyRevenue" title="Today's Collections by Department" HBox.hgrow="ALWAYS">
+								<xAxis><CategoryAxis label="Department"/></xAxis>
+								<yAxis><NumberAxis label="Amount (Tk)"/></yAxis>
+							</BarChart>
+						</HBox>
+					</Tab>
+
+					<!-- 2. MONTHLY VIEW -->
+					<!-- Inside Monthly Analytics Tab -->
+					<Tab text="Monthly Analytics">
+						<VBox spacing="15.0">
+							<padding>
+								<Insets top="15" right="15" bottom="15" left="15"/>
+							</padding>
+
+							<!-- Date Filter Controls Header -->
+							<HBox spacing="15.0" alignment="CENTER_LEFT">
+								<Label text="Select Month:" style="-fx-font-weight: bold;"/>
+								<ComboBox fx:id="cmbMonth" prefWidth="150.0"/>
+								
+								<Label text="Select Year:" style="-fx-font-weight: bold;"/>
+								<ComboBox fx:id="cmbYear" prefWidth="120.0"/>
+								
+								<Button text="Filter Report" onAction="#handleFilterMonthlyData" 
+										style="-fx-background-color: #0088cc; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+							</HBox>
+
+							<!-- Monthly Chart -->
+							<BarChart fx:id="chartMonthlyRevenue" title="Monthly Financial Breakdown" VBox.vgrow="ALWAYS">
+								<xAxis><CategoryAxis label="Department / Category"/></xAxis>
+								<yAxis><NumberAxis label="Amount (Tk)"/></yAxis>
+							</BarChart>
+						</VBox>
+					</Tab>
+
+				</TabPane>
+			</VBox>
+		</Tab>
+        <!-- TAB 2: MASTER LAB TESTS CATALOG -->
+        <Tab text="1. Diagnostic Lab Catalog">
+            <content>
+                <SplitPane dividerPositions="0.4" styleClass="split-pane">
+                    <items>
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <Label styleClass="section-header" text="Add / Update Diagnostic Test" />
+                                <GridPane hgap="10" vgap="10">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label text="Test Name:" GridPane.rowIndex="0" />
+                                        <TextField fx:id="txtTestName" promptText="e.g. CBC, RBS, X-Ray" GridPane.rowIndex="1" />
+                                        
+                                        <Label text="Price (Tk):" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txtTestPrice" promptText="0.00" GridPane.rowIndex="3" />
+                                    </children>
+                                </GridPane>
+                                <HBox alignment="CENTER_RIGHT" spacing="10">
+                                    <children>
+                                        <Button onAction="#handleSaveTest" styleClass="btn-primary" text="Save / Update Test" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <Label styleClass="section-header" text="Existing Diagnostic Tests" />
+                                <TableView fx:id="tableLabTests" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="colTestId" prefWidth="80" text="ID" />
+                                        <TableColumn fx:id="colTestName" prefWidth="250" text="Test Name" />
+                                        <TableColumn fx:id="colTestPrice" prefWidth="120" text="Price (Tk)" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </content>
+        </Tab>
+
+        <!-- TAB 3: MASTER MEDICINES CATALOG -->
+        <Tab text="2. Pharmacy Inventory">
+            <content>
+                <SplitPane dividerPositions="0.4" styleClass="split-pane">
+                    <items>
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <Label styleClass="section-header" text="Add / Update Medicine" />
+                                <GridPane hgap="10" vgap="10">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label text="Medicine Name:" GridPane.rowIndex="0" />
+                                        <TextField fx:id="txtMedicineName" promptText="e.g. Paracetamol 500mg" GridPane.rowIndex="1" />
+                                        
+                                        <Label text="Unit Price (Tk):" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txtMedicinePrice" promptText="0.00" GridPane.rowIndex="3" />
+                                    </children>
+                                </GridPane>
+                                <HBox alignment="CENTER_RIGHT" spacing="10">
+                                    <children>
+                                        <Button onAction="#handleSaveMedicine" styleClass="btn-primary" text="Save / Update Medicine" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <Label styleClass="section-header" text="Existing Medicines Catalog" />
+                                <TableView fx:id="tableMedicines" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="colMedId" prefWidth="80" text="ID" />
+                                        <TableColumn fx:id="colMedName" prefWidth="250" text="Medicine Name" />
+                                        <TableColumn fx:id="colMedPrice" prefWidth="120" text="Unit Price (Tk)" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </content>
+        </Tab>
+
+        <!-- TAB 4: CABIN MANAGEMENT -->
+        <Tab text="3. Cabin Setup">
+            <content>
+                <SplitPane dividerPositions="0.4" styleClass="split-pane">
+                    <items>
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <Label styleClass="section-header" text="Add New Cabin" />
+                                <GridPane hgap="10" vgap="10">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label text="Cabin Number:" GridPane.rowIndex="0" />
+                                        <TextField fx:id="txtCabinNumber" promptText="e.g. Cabin-104" GridPane.rowIndex="1" />
+                                        
+                                        <Label text="Cabin Type:" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txtCabinType" promptText="e.g. VIP Single" GridPane.rowIndex="3" />
+
+                                        <Label text="Daily Rate (Tk):" GridPane.rowIndex="4" />
+                                        <TextField fx:id="txtCabinRate" promptText="0.00" GridPane.rowIndex="5" />
+                                    </children>
+                                </GridPane>
+                                <HBox alignment="CENTER_RIGHT" spacing="10">
+                                    <children>
+                                        <Button onAction="#handleSaveCabin" styleClass="btn-primary" text="Add Cabin" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <Label styleClass="section-header" text="Clinic Cabins List" />
+                                <TableView fx:id="tableCabins" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="colCabinId" prefWidth="60" text="ID" />
+                                        <TableColumn fx:id="colCabinNo" prefWidth="120" text="Cabin No" />
+                                        <TableColumn fx:id="colCabinType" prefWidth="180" text="Type" />
+                                        <TableColumn fx:id="colCabinRate" prefWidth="120" text="Rate (Tk/day)" />
+                                        <TableColumn fx:id="colCabinStatus" prefWidth="120" text="Status" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </content>
+        </Tab>
+
+    </tabs>
+</TabPane>

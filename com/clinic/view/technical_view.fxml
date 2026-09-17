@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" alignment="CENTER" spacing="20" prefWidth="800" prefHeight="500">
+    <Label text="Technical Station (Diagnostics &amp; Medicine)" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <Label text="System Ready - Patient orders will display here."/>
+</VBox>

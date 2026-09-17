@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane tabClosingPolicy="UNAVAILABLE" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinic.controller.ReceptionController">
+    <tabs>
+        <!-- TAB 1: PATIENT ADMISSION & CABIN GRID -->
+        <Tab text="1. Admission &amp; Cabins">
+            <content>
+                <SplitPane dividerPositions="0.45" styleClass="split-pane">
+                    <items>
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                        <Label styleClass="section-header" text="Cabin Status Grid" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Button fx:id="btnRefresh" onAction="#handleRefresh" styleClass="btn-primary" text="Refresh" />
+                                    </children>
+                                </HBox>
+                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <TilePane fx:id="cabinTilePane" hgap="10" prefColumns="2" vgap="10" />
+                                    </content>
+                                </ScrollPane>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10" styleClass="section-container">
+                            <children>
+                                <Label styleClass="section-header" text="Patient Admission Form" />
+                                <GridPane hgap="10" vgap="8">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label text="Selected Cabin:" GridPane.rowIndex="0" />
+                                        <TextField fx:id="txtSelectedCabin" editable="false" GridPane.rowIndex="1" />
+
+                                        <Label text="Patient Full Name:" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txtPatientName" GridPane.rowIndex="3" />
+
+                                        <Label text="Phone Number:" GridPane.rowIndex="4" />
+                                        <TextField fx:id="txtPhone" GridPane.rowIndex="5" />
+
+                                        <Label text="Date of Birth:" GridPane.rowIndex="6" />
+                                        <DatePicker fx:id="dpDob" maxWidth="Infinity" GridPane.rowIndex="7" />
+
+                                        <Label text="Gender:" GridPane.rowIndex="8" />
+                                        <ComboBox fx:id="comboGender" maxWidth="Infinity" GridPane.rowIndex="9" />
+
+                                        <Label text="Assigned Doctor:" GridPane.rowIndex="10" />
+                                        <TextField fx:id="txtDoctor" promptText="Doctor Name" GridPane.rowIndex="11" />
+
+                                        <Label text="Advance Payment (Tk):" GridPane.rowIndex="12" />
+                                        <TextField fx:id="txtAdvancePayment" promptText="0.00" GridPane.rowIndex="13" />
+
+                                        <Label text="Admission Discount (Tk):" GridPane.rowIndex="14" />
+                                        <TextField fx:id="txtAdmissionDiscount" promptText="0.00" GridPane.rowIndex="15" />
+                                    </children>
+                                </GridPane>
+                                <HBox alignment="CENTER_RIGHT" spacing="10">
+                                    <children>
+                                        <Button fx:id="btnClear" onAction="#handleClear" styleClass="btn-secondary" text="Clear" />
+                                        <Button fx:id="btnAdmit" onAction="#handleAdmit" styleClass="btn-primary" text="Admit &amp; Print Slip" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </content>
+        </Tab>
+
+        <!-- TAB 2: DIAGNOSTIC LAB ORDERS -->
+        <Tab text="2. Prescription Lab Tests (PC 2)">
+            <content>
+                <VBox spacing="15" styleClass="section-container">
+                    <children>
+                        <Label styleClass="section-header" text="Send Order to Diagnostic Lab PC" />
+                        <HBox spacing="15">
+                            <children>
+                                <Label text="Admission ID / Code:" />
+                                <TextField fx:id="txtLabAdmissionId" promptText="Enter Admission ID" />
+                                <Label text="Select Test:" />
+                                <ComboBox fx:id="comboLabTests" prefWidth="220" promptText="Choose Test" />
+                                <Label text="Price (Tk):" />
+                                <TextField fx:id="txtLabPrice" prefWidth="100" />
+                                <Label text="Discount (Tk):" />
+                                <TextField fx:id="txtLabDiscount" prefWidth="100" text="0.00" />
+                                <Button onAction="#handleSendLabOrder" styleClass="btn-primary" text="Dispatch via Socket" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
+
+        <!-- TAB 3: PHARMACY MEDICINE ORDERS -->
+        <Tab text="3. Prescription Pharmacy (PC 3)">
+            <content>
+                <VBox spacing="15" styleClass="section-container">
+                    <children>
+                        <Label styleClass="section-header" text="Send Order to Pharmacy PC" />
+                        <HBox spacing="15">
+                            <children>
+                                <Label text="Admission ID / Code:" />
+                                <TextField fx:id="txtPharmaAdmissionId" promptText="Enter Admission ID" />
+                                <Label text="Select Medicine:" />
+                                <ComboBox fx:id="comboMedicines" prefWidth="220" promptText="Choose Medicine" />
+                                <Label text="Qty:" />
+                                <TextField fx:id="txtPharmaQty" prefWidth="60" text="1" />
+                                <Label text="Unit Price:" />
+                                <TextField fx:id="txtPharmaPrice" prefWidth="90" />
+                                <Label text="Discount (Tk):" />
+                                <TextField fx:id="txtPharmaDiscount" prefWidth="90" text="0.00" />
+                                <Button onAction="#handleSendPharmaOrder" styleClass="btn-primary" text="Dispatch via Socket" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
+
+        <!-- TAB 4: UNIFIED BILLING & DISCHARGE PRINTING -->
+        <Tab text="4. Final Billing &amp; Discharge">
+            <content>
+                <VBox spacing="15" styleClass="section-container">
+                    <children>
+                        <HBox spacing="15">
+                            <children>
+                                <Label text="Admission ID:" />
+                                <TextField fx:id="txtBillAdmissionId" promptText="Enter Admission ID" />
+                                <Button onAction="#handleFetchBill" styleClass="btn-secondary" text="Calculate Bill" />
+                            </children>
+                        </HBox>
+                        <TextArea fx:id="txtBillSummary" editable="false" prefHeight="300" VBox.vgrow="ALWAYS" />
+                        <HBox alignment="CENTER_RIGHT" spacing="15">
+                            <children>
+                                <Label text="Final Bill Discount (Tk):" />
+                                <TextField fx:id="txtFinalBillDiscount" prefWidth="120" text="0.00" />
+                                <Button onAction="#handlePrintFinalBill" styleClass="btn-primary" text="Print Discharge Bill" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
